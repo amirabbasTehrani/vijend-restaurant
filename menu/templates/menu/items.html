@@ -1,0 +1,13 @@
+<main>
+    <div class="max-w-screen-md mx-auto">
+            <div v-for="item in items" class="mt-16 mb-32 text-center">
+                <img :src="'/images/image-'+item.image+'.jpg'" :alt="item.title" class="w-full">
+                <h3 class="font-bold text-2xl mt-2">{{item.title}}</h3>
+                <p class=" text-sm mt-2">{{item.description}}</p>
+                <div v-if="item.price" class="text-secondary font-semibold mt-5">
+                    {{item.price}}
+                    تومان
+                </div>
+            </div>
+    </div>
+</main>

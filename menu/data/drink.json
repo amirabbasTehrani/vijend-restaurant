@@ -1,0 +1,35 @@
+{
+  "title": "نوشیدنی",
+  "items": [
+    {
+      "title": "نوشابه قوطی",
+      "price": "24,000",
+      "description": "",
+      "image": ""
+    },
+    {
+      "title": "دلستر",
+      "price": "30,000",
+      "description": "",
+      "image": ""
+    },
+    {
+      "title": "دوغ مخصوص",
+      "price": "70,000",
+      "description": "",
+      "image": "191"
+    },
+    {
+      "title": "آب معدنی",
+      "price": "7,000",
+      "description": "",
+      "image": ""
+    },
+    {
+      "title": "دوغ آبعلی",
+      "price": "24,000",
+      "description": "",
+      "image": "214"
+    }
+  ]
+}

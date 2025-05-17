@@ -1,0 +1,47 @@
+{
+  "title": "چای و دمنوش",
+  "items": [
+    {
+      "title": "چای اصیل ایرانی",
+      "price": "65,000",
+      "description": "",
+      "image": "19"
+    },
+    {
+      "title": "سرویس چای",
+      "price": "170,000",
+      "description": "",
+      "image": "20"
+    },
+    {
+      "title": "لمون گرس",
+      "price": "90,000",
+      "description": "زنجبیل،نعنا",
+      "image": "24"
+    },
+    {
+      "title": "پینک رز",
+      "price": "100,000",
+      "description": "گل محمدی،گل لاوانو،گل بابونه",
+      "image": "24"
+    },
+    {
+      "title": "کویین بری",
+      "price": "115,000",
+      "description": "چای ترش،توت فرنگی،گل سرخ کرنبری،زرشک",
+      "image": "23"
+    },
+    {
+      "title": "ماسالا",
+      "price": "89,000",
+      "description": "",
+      "image": "56"
+    },
+    {
+      "title": "هات چری",
+      "price": "75,000",
+      "description": "",
+      "image": ""
+    }
+  ]
+}
