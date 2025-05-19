@@ -1,14 +1,30 @@
-from django.views.generic import ListView, DetailView
+from django.views.generic import TemplateView, DetailView
 from django.shortcuts import get_object_or_404
 from .models import Category, MenuItem
 
-# Create your views here.
-
-class HomePageView(ListView):
-    model = Category
+class HomePageView(TemplateView):
     template_name = 'menu/index.html'
-    context_object_name = 'Categories'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['parent_categories'] = (
+            Category.objects.filter(parent__isnull=True)
+            .prefetch_related('children')
+        )
+        return context
     
-    def get_queryset(self):
-        return Category.objects.filter(parent__isnull=True)
-    
+class MenuItemListView(DetailView):
+    model = Category
+    template_name = 'menu/items.html'
+    context_object_name = 'category'
+    slug_url_kwarg = 'slug'
+
+    def get_object(self):
+        parent_slug = self.kwargs['parent_slug']
+        sub_slug = self.kwargs['slug']
+        return get_object_or_404(Category, slug=sub_slug, parent__slug=parent_slug)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['items'] = self.object.items.filter(is_available=True)
+        return context

@@ -3,11 +3,11 @@ from .models import Category, MenuItem
 
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('title', 'parent')
+    list_display = ('title','parent','image')
 
 
 class MenuItemAdmin(admin.ModelAdmin):
-    list_display = ('title', 'category','get_parent' ,'price' , 'is_available')
+    list_display = ('title','category','get_parent','price','is_available','image')
     list_filter = ('category', 'is_available')
     search_fields = ('title', 'description')
     def get_parent(self, obj):
