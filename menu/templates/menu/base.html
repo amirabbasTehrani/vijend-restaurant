@@ -1,67 +1,118 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
+{% load static %}
+
+<!doctype html>
+<html lang="fa" dir="rtl" data-theme="light">
 <head>
-  <meta charset="UTF-8">
-  <title>{% block title %}ویژند رستوران{% endblock %}</title>
-  {% load static %}
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="{% static 'menu/css/fonts.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>منو آنلاین رستوران ویژند</title>
+    <link rel="stylesheet" href="{% static 'menu/css/output.css' %}">
+    <link rel="stylesheet" href="{% static 'menu/css/fonts.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'menu/images/favicon.ico' %}">
 </head>
-<body class="bg-white text-gray-800 font-sans">
+<body class="relative">
+<!--    header start-->
+    <header class="sticky top-0 z-10 bg-base-100 shadow-header">
+        <div class="navbar bg-base-100 mx-auto max-w-screen-xl">
+            <div class="navbar-start">
 
-  <!-- Header -->
-  <header class="border-b border-gray-200 py-4">
-    <div class="container mx-auto px-4 flex items-center justify-between">
-
-      <!-- Logo (Top Right in RTL) -->
-      <div class="w-72">
-        <a href="{% url 'home' %}">
-          <img src="{% static 'menu/images/header-logo.png' %}" alt="Vijend Logo" class="w-full h-auto object-contain">
-        </a>
-      </div>
-
-      <!-- Navigation (Left in RTL) -->
-      <!-- Navigation -->
-      <nav class="flex gap-8 items-center font-bold text-green-900 text-sm relative">
-        <a href="{% url 'home' %}" class="hover:text-green-600">صفحه اصلی</a>
-
-        {% for parent in parent_categories_nav %}
-        <div class="relative group">
-            <!-- Toggle Button (no <button> tag!) -->
-            <div class="flex items-center gap-1 cursor-pointer hover:text-green-600">
-            {{ parent.title }}
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-orange-600 transition-transform transform group-hover:rotate-180" viewBox="0 0 24 24" stroke-width="2" stroke="#b05214" fill="None">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6l6 -6"/>
-            </svg>
-            </div>
-
-            <!-- Dropdown -->
-            <ul class="absolute right-0 opacity-0 group-hover:opacity-100 bg-white border border-gray-200 rounded shadow-lg mt-2 w-44 text-right z-50 !important"> 
-            {% for child in parent.children.all %}
-            <li>
-                <a href="{% url 'menuitem-list' parent.slug child.slug %}" class="block px-4 py-1 hover:bg-gray-100 text-sm">
-                {{ child.title }}
+                <a href="index.html" class="max-w-xs">
+                    <img src="{% static 'menu/images/header-logo.png' %}" alt="رستوران ویژند">
                 </a>
-            </li>
-            {% endfor %}
-            </ul>
+            </div>
+            <div class="navbar-end ">
+                <div class="">
+                    <div tabindex="0" role="button" class="btn btn-ghost lg:hidden" onclick="my_modal_2.showModal()">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
+                    </div>
+                    <dialog id="my_modal_2" class="modal max-h-screen overflow-auto">
+                        <div class="modal-box  ">
+                            <form method="dialog" >
+                                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                            </form>
+                            {% for parent in parent_categories_nav %}
+                            <div>
+                                <div class="divider">{{ parent.title }}</div>
+                                <ul class="menu menu-lg">
+                                    {% for child in parent.children.all %}
+                                        <li>
+                                            <a href="{% url 'menuitem-list' parent.slug child.slug %}" onclick="my_modal_2.close()">
+                                                {{ child.title }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+
+                                </ul>
+                            </div>
+                            {% endfor %}
+
+                        </div>
+                        <form method="dialog" class="modal-backdrop">
+                            <button>close</button>
+                        </form>
+                    </dialog>
+                </div>
+                <div class="hidden lg:flex">
+                    <a href="/" role="button" class="btn btn-ghost m-1 text-secondary">صفحه اصلی</a>
+                    {% for parent in parent_categories_nav %}
+                    <div class="dropdown dropdown-hover dropdown-end">
+                        <div tabindex="0" role="button" class="btn btn-ghost m-1 text-secondary">
+                            {{ parent.title }}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-down" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#b05214" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M6 9l6 6l6 -6" />
+                            </svg>
+                        </div>
+                        <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                            {% for child in parent.children.all %}
+                            <li>
+                                <a href="{% url 'menuitem-list' parent.slug child.slug %}">
+                                   {{ child.title }}
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endfor %}
+                    
+                </div>
+            </div>
         </div>
-        {% endfor %}
-        </nav>
+    </header>
+<!--    header end-->
 
-
-    </div>
-  </header>
-
-  <!-- Main Content -->
-  <main class="container mx-auto px-4 py-8">
+<main class="container mx-auto px-4 py-8">
     {% block content %}{% endblock %}
-  </main>
+</main>
 
-  <!-- Footer -->
-  <footer class="bg-gray-100 py-6 text-center text-gray-600 text-sm">
-    
-  </footer>
+<!--    bottom navigation start -->
+<footer class="dock lg:hidden bg-primary text-primary-content">
+    <a href="https://instagram.com/vijend_restaurant">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 icon icon-tabler icon-tabler-brand-instagram" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <path d="M4 4m0 4a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z" />
+            <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+            <path d="M16.5 7.5l0 .01" />
+        </svg>
+    </a>
+    <a href="https://maps.google.com/?q=37.2067653,50.0389239" target="_blank">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 icon icon-tabler icon-tabler-map-pin" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+            <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" />
+        </svg>
 
-</body>
-</html>
+    </a>
+    <a role="button" href="tel:01342428840">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 icon icon-tabler icon-tabler-phone-call" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" />
+            <path d="M15 7a2 2 0 0 1 2 2" />
+            <path d="M15 3a6 6 0 0 1 6 6" />
+        </svg>
+    </a>
+</footer>
+
+<!--    bottom navigation start -->

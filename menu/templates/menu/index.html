@@ -3,17 +3,30 @@
 {% block title %}صفحه اصلی{% endblock %}
 
 {% block content %}
-<div class="container mx-auto py-10">
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-    {% for parent in parent_categories %}
-      {% for sub in parent.children.all %}
-        <a href="{% url 'menuitem-list' parent.slug sub.slug %}" class="group block relative overflow-hidden rounded shadow-md">
-          
-            <img src="{{ sub.image.url }}" alt="{{ sub.title }}" class="w-full h-[300px] object-cover transition duration-300 group-hover:scale-105">
-          
-        </a>
-      {% endfor %}
+<!--    main section start -->
+<main class="flex flex-wrap pb-20">
+  {% for parent in parent_categories %}
+    {% for sub in parent.children.all %}
+    <div class="w-full lg:w-1/3 p-4">
+            <a href="{% url 'menuitem-list' parent.slug sub.slug %}">
+                <img src="{{ sub.image.url }}" alt="{{ sub.title }}" class="w-full">
+            </a>
+    </div>
     {% endfor %}
-  </div>
-</div>
+  {% endfor %}      
+</main>
+<!--    main section end -->
+
+{% comment %} <main class="flex flex-wrap pb-20 justify-center">
+  {% for parent in parent_categories %}
+    {% for sub in parent.children.all %}
+      <div class="w-full sm:w-1/2 lg:w-1/3 p-4">
+        <a href="{% url 'menuitem-list' parent.slug sub.slug %}">
+          <img src="{{ sub.image.url }}" alt="{{ sub.title }}" class="w-full rounded shadow hover:shadow-lg transition">
+        </a>
+      </div>
+    {% endfor %}
+  {% endfor %}
+</main> {% endcomment %}
 {% endblock %}
+

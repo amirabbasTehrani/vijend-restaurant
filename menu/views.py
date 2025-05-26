@@ -2,6 +2,7 @@ from django.views.generic import TemplateView, DetailView
 from django.shortcuts import get_object_or_404
 from .models import Category, MenuItem
 
+
 class HomePageView(TemplateView):
     template_name = 'menu/index.html'
 
@@ -12,6 +13,7 @@ class HomePageView(TemplateView):
             .prefetch_related('children')
         )
         return context
+    
     
 class MenuItemListView(DetailView):
     model = Category

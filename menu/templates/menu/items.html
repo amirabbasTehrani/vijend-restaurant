@@ -1,26 +1,23 @@
 {% extends "menu/base.html" %}
+{% load static %}
 {% block title %}{{ category.title }}{% endblock %}
 
 {% block content %}
 
-<div class="max-w-screen-md mx-auto grid grid-cols-1 gap-6">
+<div class="max-w-screen-md mx-auto">
   {% for item in items %}
-  <div class="bg-white border rounded shadow-sm overflow-hidden transition hover:shadow-md">
-    {% if item.image %}
-    <img src="{{ item.image.url }}" alt="{{ item.title }}" class="w-auto h-auto object-cover">
-    {% endif %}
-    <div class="p-4 text-center">
-      <h2 class="text-lg font-semibold mb-1">{{ item.title }}</h2>
-      {% if item.description %}
-      <p class="text-sm text-gray-600 mb-2">{{ item.description }}</p>
-      {% endif %}
-      {% if item.price %}
-      <div class="text-green-700 font-bold text-base">{{ item.price }} تومان</div>
+    <div class="mt-16 mb-32 text-center">
+      {% if item.image and item.image.url %}
+        <img src="{{ item.image.url }}" alt="{{ item.name }}" class="w-full">
       {% else %}
-      <div class="text-gray-500 text-sm">قیمت روز</div>
+        <img src="{% static 'menu/images/default-image.jpg' %}" alt="no image" class="w-full">
+      {% endif %}
+      <h3 class="font-bold text-2xl mt-2">{{ item.title }}</h3>
+      <p class="text-sm mt-2">{{ item.description }}</p>
+      {% if item.price %}
+        <div class="text-secondary font-semibold mt-5">{{ item.price }} تومان</div>
       {% endif %}
     </div>
-  </div>
-  {% endfor %}
+  {% endfor %}   
 </div>
 {% endblock %}
