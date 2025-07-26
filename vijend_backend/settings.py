@@ -30,7 +30,7 @@ LOCALE_PATHS = [
 SECRET_KEY = "django-insecure-6!oj)&_)6*=!ru1jqh$^w(n8+4nrygu1&j9ei(ytr-(4kl92zv"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'vijend-restaurant.pachim.run',
