@@ -87,7 +87,7 @@ TEMPLATES = [
 STATIC_URL = '/static/'
 
 # This is where Django will copy all static files to when you run collectstatic
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = BASE_DIR / 'static'
 
 # This tells Django where your app's static files are during development
 STATICFILES_DIRS = [BASE_DIR / 'menu/static']
