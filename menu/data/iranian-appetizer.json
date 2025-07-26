@@ -3,43 +3,43 @@
   "items": [
     {
       "title": "ماست چکیده محلی",
-      "price": "35,000",
+      "price": "50,000",
       "description": "",
       "image": "166"
     },
     {
       "title": "ماست و خیار",
-      "price": "40,000",
+      "price": "55,000",
       "description": "",
       "image": "171"
     },
     {
       "title": "بورانی اسفناج",
-      "price": "55,000",
+      "price": "65,000",
       "description": "",
       "image": "169"
     },
     {
       "title": "زیتون پرورده",
-      "price": "75,000",
+      "price": "85,000",
       "description": "",
       "image": "174"
     },
     {
       "title": "زیتون سنتی",
-      "price": "40,000",
+      "price": "70,000",
       "description": "",
       "image": "173"
     },
     {
       "title": "خیار دلار",
-      "price": "25,000",
+      "price": "35,000",
       "description": "",
       "image": "189"
     },
     {
       "title": "سالاد شیرازی",
-      "price": "45,000",
+      "price": "65,000",
       "description": "",
       "image": "165"
     },
@@ -51,7 +51,7 @@
     },
     {
       "title": "کال کباب",
-      "price": "65,000",
+      "price": "75,000",
       "description": "",
       "image": "175"
     },
@@ -63,7 +63,7 @@
     },
     {
       "title": "سبزی خوردن",
-      "price": "30,000",
+      "price": "40,000",
       "description": "",
       "image": "176"
     }
