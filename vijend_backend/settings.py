@@ -92,8 +92,12 @@ WSGI_APPLICATION = "vijend_backend.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.mysql",
+        'NAME': 'vijend_db',
+        'USER': 'vijend_admin',
+        'PASSWORD': 'ldlLOoSaIe58qIK4ra9o',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
     }
 }
 
