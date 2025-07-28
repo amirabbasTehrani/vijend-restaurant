@@ -42,6 +42,7 @@ ALLOWED_HOSTS = [
     'vijend-restaurant.ir'
 ]
 
+CSRF_TRUSTED_ORIGINS=['https://vijend-restaurant.ir']
 
 # Application definition
 
