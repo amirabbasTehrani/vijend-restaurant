@@ -3,7 +3,7 @@ from .models import Category, MenuItem
 
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('priority','title','parent','image')
+    list_display = ('title','priority','parent','image')
 
 
 class MenuItemAdmin(admin.ModelAdmin):
