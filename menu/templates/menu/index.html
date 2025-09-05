@@ -6,7 +6,7 @@
 <!--    main section start -->
 <main class="flex flex-wrap pb-20">
   {% for parent in parent_categories %}
-    {% for sub in parent.children.all %}
+  {% for sub in parent.children.all|dictsortreversed:"priority" %}
     <div class="w-full lg:w-1/3 p-4">
             <a href="{% url 'menuitem-list' parent.slug sub.slug %}">
               {% if sub.image %}
