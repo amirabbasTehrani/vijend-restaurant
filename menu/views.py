@@ -1,7 +1,7 @@
 from django.views.generic import TemplateView, DetailView
 from django.shortcuts import get_object_or_404
 from .models import Category, MenuItem
-
+from django.db.models import Prefetch
 
 class HomePageView(TemplateView):
     template_name = 'menu/index.html'
