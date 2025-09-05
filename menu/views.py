@@ -10,8 +10,10 @@ class HomePageView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['parent_categories'] = (
             Category.objects.filter(parent__isnull=True)
-            .prefetch_related('children')
-            .order_by('-priority')
+        .prefetch_related(
+            Prefetch('children', queryset=Category.objects.order_by('-priority'))
+        )
+        .order_by('-priority')
         )
         return context
 
