@@ -7,7 +7,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 class MenuItemAdmin(admin.ModelAdmin):
-    list_display = ('priority','title','category','get_parent','price','is_available','image')
+    list_display = ('title','priority','category','get_parent','price','is_available','image')
     list_filter = ('category', 'is_available')
     search_fields = ('title', 'description')
     def get_parent(self, obj):
