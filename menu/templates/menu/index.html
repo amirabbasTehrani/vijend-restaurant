@@ -9,7 +9,9 @@
     {% for sub in parent.children.all %}
     <div class="w-full lg:w-1/3 p-4">
             <a href="{% url 'menuitem-list' parent.slug sub.slug %}">
-                <img src="{{ sub.image.url }}" alt="{{ sub.title }}" class="w-full">
+              {% if sub.image %}
+              <img src="{{ sub.image.url }}" alt="{{ sub.title }}" class="w-full">
+              {% endif %}
             </a>
     </div>
     {% endfor %}
