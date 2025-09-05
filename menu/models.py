@@ -8,6 +8,7 @@ class Category(models.Model):
     title = models.CharField(max_length=155, unique=True, verbose_name=_("نام"))
     slug = models.SlugField(unique=True)
     image = models.ImageField(upload_to='menu_items/', blank=True, null=True, verbose_name=_("تصویر"))
+    priority=models.IntegerField(blank=True,null=True,verbose_name= _('اولویت نمایش'))
     parent = models.ForeignKey(
         'self',
         null=True,
@@ -20,7 +21,7 @@ class Category(models.Model):
         verbose_name = _("کتگوری")
         verbose_name_plural = _("گتگوری ها")
 
-    
+
     def __str__(self):
         return self.title
 
@@ -35,6 +36,7 @@ class MenuItem(models.Model):
     image = models.ImageField(upload_to='menu_items/', blank=True, null=True, verbose_name = _("تصویر"))
     is_available = models.BooleanField(default=True, verbose_name = _("موجود"))
     created_at = models.DateTimeField(auto_now_add=True, verbose_name = _("تاریخ ایجاد"))
+    priority=models.IntegerField(blank=True,null=True,verbose_name= _('اولویت نمایش'))
 
     class Meta:
         ordering = ['category', 'title']

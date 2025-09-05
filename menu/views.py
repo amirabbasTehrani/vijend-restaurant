@@ -11,10 +11,11 @@ class HomePageView(TemplateView):
         context['parent_categories'] = (
             Category.objects.filter(parent__isnull=True)
             .prefetch_related('children')
+            .order_by('-priority')
         )
         return context
-    
-    
+
+
 class MenuItemListView(DetailView):
     model = Category
     template_name = 'menu/items.html'
@@ -28,5 +29,5 @@ class MenuItemListView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['items'] = self.object.items.filter(is_available=True)
+        context['items'] = self.object.items.filter(is_available=True).order_by('-priority')
         return context
