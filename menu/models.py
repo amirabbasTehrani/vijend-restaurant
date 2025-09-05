@@ -5,7 +5,10 @@ from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
 class Category(models.Model):
-    ...
+    title = models.CharField(max_length=155, unique=True, verbose_name=_("نام"))
+    slug = models.SlugField(unique=True)
+    image = models.ImageField(upload_to='menu_items/', blank=True, null=True, verbose_name=_("تصویر"))
+    priority=models.IntegerField(blank=True,null=True,verbose_name= _('اولویت نمایش'))
     parent = models.ForeignKey(
         'self',
         null=True,
@@ -14,22 +17,16 @@ class Category(models.Model):
         related_name='children',
         verbose_name=_("گروه")
     )
-
     class Meta:
-        ordering = ['-priority', 'title']
+        verbose_name = _("کتگوری")
+        verbose_name_plural = _("گتگوری ها")
 
-    # Add this property for ordered children
-    @property
-    def children_ordered(self):
-        return self.children.order_by(F('priority').desc(nulls_last=True), 'title')
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
         return reverse("category-detail", kwargs={"pk": self.pk})
-
-
 
 class MenuItem(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='items',verbose_name = _("کتگوری"))
