@@ -18,7 +18,7 @@ class Category(models.Model):
         verbose_name=_("گروه")
     )
     class Meta:
-        ordering = ['-priority']
+        ordering = ['-priority', 'title']
         verbose_name = _("کتگوری")
         verbose_name_plural = _("گتگوری ها")
 
