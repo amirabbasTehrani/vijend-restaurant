@@ -4,19 +4,60 @@
 
 {% block content %}
 <!--    main section start -->
-<main class="flex flex-wrap pb-20">
+<main class="flex flex-wrap pb-20 children-container">
   {% for parent in parent_categories %}
-    {% for sub in parent.children.all %}
-    <div class="w-full lg:w-1/3 p-4">
-            <a href="{% url 'menuitem-list' parent.slug sub.slug %}">
-              {% if sub.image %}
-              <img src="{{ sub.image.url }}" alt="{{ sub.title }}" class="w-full">
-              {% endif %}
-            </a>
-    </div>
-    {% endfor %}
+  {% for sub in parent.children.all %}
+  <div
+          class="category-card w-full lg:w-1/3 p-4"
+          data-priority="{{ sub.priority|default_if_none:'' }}"
+          data-title="{{ sub.title|escape }}"
+          data-parent="{{ parent.slug }}"
+          data-slug="{{ sub.slug }}"
+  >
+    <a href="{% url 'menuitem-list' parent.slug sub.slug %}">
+      {% if sub.image %}
+      <img src="{{ sub.image.url }}" alt="{{ sub.title }}" class="w-full">
+      {% endif %}
+    </a>
+  </div>
+  {% endfor %}
   {% endfor %}
 </main>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var container = document.querySelector('.children-container');
+    if (!container) return;
+
+    var cards = Array.from(container.querySelectorAll('.category-card'));
+
+    cards.sort(function(a, b) {
+      var pa = parseInt(a.dataset.priority, 10);
+      var pb = parseInt(b.dataset.priority, 10);
+
+      // Nulls last
+      var aVal = isNaN(pa) ? Number.NEGATIVE_INFINITY : pa;
+      var bVal = isNaN(pb) ? Number.NEGATIVE_INFINITY : pb;
+
+      if (aVal !== bVal) {
+        return bVal - aVal; // higher priority first
+      }
+
+      // Tiebreaker: title ASC
+      var at = (a.dataset.title || '').toLowerCase();
+      var bt = (b.dataset.title || '').toLowerCase();
+      if (at < bt) return -1;
+      if (at > bt) return 1;
+      return 0;
+    });
+
+    // Re-append in sorted order
+    cards.forEach(function(card) {
+      container.appendChild(card);
+    });
+  });
+</script>
+
 <!--    main section end -->
 
 {% comment %} <main class="flex flex-wrap pb-20 justify-center">
