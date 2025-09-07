@@ -8,13 +8,12 @@ class HomePageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # only children categories (have a parent)
-        context['sub_categories'] = (
-            Category.objects.filter(parent__isnull=False)
-            .order_by(F('priority').desc(nulls_last=True), 'title')
+        context['parent_categories'] = (
+            Category.objects.filter(parent__isnull=True)
+            .prefetch_related('children')
+            .order_by('-priority')
         )
         return context
-
 
 
 class MenuItemListView(DetailView):
