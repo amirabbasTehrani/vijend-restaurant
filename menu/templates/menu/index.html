@@ -4,19 +4,75 @@
 
 {% block content %}
 <!--    main section start -->
-<main class="flex flex-wrap pb-20">
+{% comment %}
+Replace your current main block with the snippet below.
+This sorts children on the client side (JS). Works even if some priorities are null.
+{% endcomment %}
+
+<main class="pb-20">
   {% for parent in parent_categories %}
-    {% for sub in parent.children.all %}
-    <div class="w-full lg:w-1/3 p-4">
-            <a href="{% url 'menuitem-list' parent.slug sub.slug %}">
-              {% if sub.image %}
-              <img src="{{ sub.image.url }}" alt="{{ sub.title }}" class="w-full">
-              {% endif %}
-            </a>
+  <section class="parent-section mb-8">
+    {# optional visible parent heading - remove or style as needed #}
+    <h2 class="sr-only">{{ parent.title }}</h2>
+
+    {# container for this parent's children - JS will sort children inside this div #}
+    <div class="children-container flex flex-wrap" data-parent-slug="{{ parent.slug }}">
+      {% for sub in parent.children.all %}
+      <div
+              class="category-card w-full lg:w-1/3 p-4"
+              data-priority="{{ sub.priority|default_if_none:'' }}"
+              data-title="{{ sub.title|escape }}"
+      >
+        <a href="{% url 'menuitem-list' parent.slug sub.slug %}">
+          {% if sub.image %}
+          <img src="{{ sub.image.url }}" alt="{{ sub.title }}" class="w-full">
+          {% endif %}
+        </a>
+      </div>
+      {% endfor %}
     </div>
-    {% endfor %}
+  </section>
   {% endfor %}
 </main>
+
+{# --- JavaScript: sort each children-container by priority desc (nulls last) --- #}
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // For every children-container on the page
+    document.querySelectorAll('.children-container').forEach(function(container) {
+      // collect child cards (category-card)
+      var cards = Array.from(container.querySelectorAll('.category-card'));
+
+      // Sort function: descending numeric priority, nulls last, then title ascending
+      cards.sort(function(a, b) {
+        var pa = parseInt(a.dataset.priority, 10);
+        var pb = parseInt(b.dataset.priority, 10);
+
+        // If priority is missing / not numeric -> treat as negative infinity (so it sorts last)
+        var aVal = isNaN(pa) ? Number.NEGATIVE_INFINITY : pa;
+        var bVal = isNaN(pb) ? Number.NEGATIVE_INFINITY : pb;
+
+        // If priorities differ, sort descending (higher priority first)
+        if (aVal !== bVal) {
+          return bVal - aVal; // b - a => descending
+        }
+
+        // Tiebreaker: use the title (case-insensitive, ascending)
+        var at = (a.dataset.title || a.textContent || '').trim().toLowerCase();
+        var bt = (b.dataset.title || b.textContent || '').trim().toLowerCase();
+        if (at < bt) return -1;
+        if (at > bt) return 1;
+        return 0;
+      });
+
+      // Re-append in order (this moves nodes to new order)
+      cards.forEach(function(card) {
+        container.appendChild(card);
+      });
+    });
+  });
+</script>
+
 <!--    main section end -->
 
 {% comment %} <main class="flex flex-wrap pb-20 justify-center">
